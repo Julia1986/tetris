@@ -66,6 +66,18 @@ function moveTetroDown() {
                 }
             }
         }
+    } else {
+        fixTetro();
+    }
+}
+
+function fixTetro() {
+    for (var y = 0; y < playfield.length; y++) {
+        for (var x = 0; x < playfield[y].length; x++) {
+            if (playfield[y][x] === 1) {
+                playfield[y][x] = 2;
+            }
+        }
     }
 }
 
