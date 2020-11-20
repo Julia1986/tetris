@@ -50,6 +50,11 @@ function moveTetroDown() {
 }
 
 draw();
+function startGame() {
+    moveTetroDown();
+    draw();
+    setTimeout(startGame, 1000);
+}
 
-moveTetroDown();
-draw();
+setTimeout(startGame, 1000);
+
