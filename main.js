@@ -1,3 +1,4 @@
+'use strict'
 let main = document.querySelector('.main');
 
 let playfield = [
@@ -23,10 +24,10 @@ let playfield = [
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 ];
 
-let mainInnerHTML = '';
+let mainInnerHTML = "";
 for (let y = 0; y < playfield.length; y++) {
-    for (let x = 0; y < playfield[y].length; x++) {
+    for (let x = 0; x < playfield[y].length; x++) {
         mainInnerHTML += '<div class="cell"></div>';
     }
 }
-console.log (mainInnerHTML);
+main.InnerHTML = mainInnerHTML;
