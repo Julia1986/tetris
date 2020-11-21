@@ -1,8 +1,8 @@
 var main = document.querySelector(".main");
 
 var playfield = [
-    [0, 0, 0, 0, 0, 1, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 1, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 1, 1, 0, 0, 0],
     [0, 0, 0, 0, 0, 1, 1, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -19,8 +19,8 @@ var playfield = [
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 2, 2, 0, 0, 0],
-    [0, 0, 0, 0, 0, 2, 2, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 ];
 
 var gameSpeed = 400;
@@ -103,7 +103,7 @@ function canTetroMoveRight() {
     for (var y = 0; y < playfield.length; y++) {
         for (var x = 0; x < playfield[y].length; x++) {
             if (playfield[y][x] === 1) {
-                if (x === 9) { //вместо девятки можно playfield[0].length - 1
+                if (x === 9 || playfield[y][x + 1] ===2) { //вместо девятки можно playfield[0].length - 1
                     return false;
                 }
             }
@@ -126,6 +126,23 @@ function moveTetroRight() {
     } 
 }
 
+function removeFullLines() {
+    var canRemoveLine = true;
+    for (var y = 0; y < playfield.length; y++) {
+        for (var x = 0; x < playfield[y].length; x++) {
+            if (playfield[y][x] !== 2) {
+                canRemoveLine = false;
+                break;
+            }
+        }
+        if (canRemoveLine) {
+            playfield.splice(y, 1);
+            playfield.splice(0, 0, [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+        }
+        canRemoveLine = true;
+    }
+}
+
 function fixTetro() {
     for (var y = 0; y < playfield.length; y++) {
         for (var x = 0; x < playfield[y].length; x++) {
@@ -135,8 +152,10 @@ function fixTetro() {
         }
     }
 
-    playfield[0] = [0, 0, 0, 0, 1, 0, 0, 0, 0, 0];
-    playfield[1] = [0, 0, 0, 1, 1, 1, 0, 0, 0, 0];
+    removeFullLines();
+
+    playfield[0] = [0, 0, 0, 0, 1, 1, 0, 0, 0, 0];
+    playfield[1] = [0, 0, 0, 0, 1, 1, 0, 0, 0, 0];
 }
 
 draw();
@@ -148,8 +167,9 @@ document.onkeydown = function(e) {
             moveTetroRight();
         }
         else if (e.code === "ArrowDown") {
-            //ускоряемся
+            moveTetroDown();
     }
+    draw();
 };  
 
 function startGame() {
@@ -159,4 +179,3 @@ function startGame() {
 }
 
 setTimeout(startGame, gameSpeed);
-
