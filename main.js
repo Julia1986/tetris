@@ -71,6 +71,17 @@ function addActiveTetro() {
     }
 }
 
+function hasCollisions() {
+    for (var y = 0; y < activeTetro.shape.length; y++) {
+        for (var x = 0; x < activeTetro.shape[y].length; x++) {
+            if (activeTetro.shape[y][x] && playfield[activeTetro.y + y] === undefined) {
+                return true;
+            }
+        }
+    } 
+    return false;
+}
+
 function canTetroMoveDown() {
     for (var y = 0; y < playfield.length; y++) {
         for (var x = 0; x < playfield[y].length; x++) {
@@ -196,6 +207,9 @@ document.onkeydown = function(e) {
         }
         else if (e.code === "ArrowDown") {
             activeTetro.y += 1; //moveTetroDown();
+            if (hasCollisions()) {
+                activeTetro.y -= 1;
+            }
     }
 
     addActiveTetro();
