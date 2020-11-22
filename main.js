@@ -24,6 +24,7 @@ var playfield = [
 ];
 
 var gameSpeed = 400;
+var score = 0;
 var activeTetro = {
     x: 0,
     y: 0,
@@ -155,7 +156,7 @@ function removeFullLines() {
 function getNewTetro(){
     const possibleFigures = 'IOLJTSZ';
     const rand = Math.floor(Math.random()*7);
-    return figures[possibleFigures[2]];
+    return figures[possibleFigures[rand]];
 }
 
 function fixTetro() {
@@ -173,6 +174,7 @@ function moveTetroDown() {
         if (hasCollisions()) {
             activeTetro.y -= 1;
             fixTetro();
+            removeFullLines();
             activeTetro.shape = getNewTetro();
             activeTetro.x = Math.floor((10 - activeTetro.shape[0].length) / 2);
             activeTetro.y = 0;

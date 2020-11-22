@@ -1,16 +1,25 @@
 * {
     box-sizing: border-box;
     background: #000000;
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .body {
     margin: 0;
 }
 
+#game {
+    padding-top: 20px;
+    width: 320px;
+    margin: auto;
+    font-size: 25px;
+}
+
 .main {
     width: 320px;
     height: 620px;
-    margin: 100px auto 0;
+    margin: 20px auto 0;
     border: 10px solid silver;
     font-size: 0;
 }
