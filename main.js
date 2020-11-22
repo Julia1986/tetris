@@ -28,9 +28,48 @@ var activeTetro = {
     x: 0,
     y: 0,
     shape: [
+        [0,1,0,0],
+        [0,1,0,0],
+        [0,1,0,0],
+        [0,1,0,0],
+    ],
+};
+
+var figures = {
+    O: [
+        [1,1],
+        [1,1],
+    ],
+    I: [
+        [0,1,0,0],
+        [0,1,0,0],
+        [0,1,0,0],
+        [0,1,0,0],
+    ],
+    S: [
+        [0,1,1],
+        [1,1,0],
+        [0,0,0],
+    ],
+    Z: [
+        [1,1,0],
+        [0,1,1],
+        [0,0,0],
+    ],
+    L: [
+        [1,0,0],
+        [1,1,1],
+        [0,0,0],
+    ],
+    J: [
+        [0,0,1],
+        [1,1,1],
+        [0,0,0],
+    ],
+    T: [
         [1,1,1],
         [0,1,0],
-        [0,0,0]
+        [0,0,0],
     ],
 };
 
@@ -72,9 +111,14 @@ function addActiveTetro() {
 }
 
 function rotateTetro() {
+    const prevTetroState = activeTetro.shape;
     activeTetro.shape = activeTetro.shape[0].map((val, index) => 
     activeTetro.shape.map((row) => row[index]).reverse()
 );
+
+    if (hasCollisions()) {
+        activeTetro.shape = prevTetroState;
+    }
 }
 
 function hasCollisions() {
@@ -108,6 +152,12 @@ function removeFullLines() {
     }
 }
 
+function getNewTetro(){
+    const possibleFigures = 'IOLJTSZ';
+    const rand = Math.floor(Math.random()*7);
+    return figures[possibleFigures[2]];
+}
+
 function fixTetro() {
     for (var y = 0; y < playfield.length; y++) {
         for (var x = 0; x < playfield[y].length; x++) {
@@ -116,6 +166,17 @@ function fixTetro() {
             }
         }
     }
+}
+
+function moveTetroDown() {
+    activeTetro.y += 1; //moveTetroDown();
+        if (hasCollisions()) {
+            activeTetro.y -= 1;
+            fixTetro();
+            activeTetro.shape = getNewTetro();
+            activeTetro.x = Math.floor((10 - activeTetro.shape[0].length) / 2);
+            activeTetro.y = 0;
+        }
 }
 
 document.onkeydown = function(e) { 
@@ -130,12 +191,7 @@ document.onkeydown = function(e) {
                 activeTetro.x -= 1;
             }
         } else if (e.code === "ArrowDown") {
-            activeTetro.y += 1; //moveTetroDown();
-            if (hasCollisions()) {
-                activeTetro.y -= 1;
-                fixTetro();
-                activeTetro.y = 0;
-            }
+            moveTetroDown();
         } else if (e.code === "ArrowUp") {
             rotateTetro();
     }
@@ -147,10 +203,11 @@ document.onkeydown = function(e) {
 addActiveTetro();
 draw();
 
-/*function startGame() {
+function startGame() {
     moveTetroDown();
+    addActiveTetro();
     draw();
     setTimeout(startGame, gameSpeed);
 }
 
-setTimeout(startGame, gameSpeed);*/
+setTimeout(startGame, gameSpeed);
