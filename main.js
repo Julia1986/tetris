@@ -71,11 +71,18 @@ function addActiveTetro() {
     }
 }
 
+function rotateTetro() {
+    activeTetro.shape = activeTetro.shape[0].map((val, index) => 
+    activeTetro.shape.map((row) => row[index]).reverse()
+);
+}
+
 function hasCollisions() {
     for (var y = 0; y < activeTetro.shape.length; y++) {
         for (var x = 0; x < activeTetro.shape[y].length; x++) {
             if (activeTetro.shape[y][x] && (playfield[activeTetro.y + y] === undefined ||
-                playfield[activeTetro.y + y][activeTetro.x + x] === undefined)
+                playfield[activeTetro.y + y][activeTetro.x + x] === undefined || 
+                playfield[activeTetro.y + y][activeTetro.x + x] === 2)
                 ) {
                 return true;
             }
@@ -129,6 +136,8 @@ document.onkeydown = function(e) {
                 fixTetro();
                 activeTetro.y = 0;
             }
+        } else if (e.code === "ArrowUp") {
+            rotateTetro();
     }
 
     addActiveTetro();
