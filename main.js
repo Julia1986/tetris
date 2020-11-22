@@ -1,5 +1,8 @@
 var main = document.querySelector(".main");
 
+const scoreElem = document.getElementById('score');
+const levelElem = document.getElementById('level');
+
 var playfield = [
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -23,8 +26,24 @@ var playfield = [
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 ];
 
-var gameSpeed = 400;
 var score = 0;
+var currentLevel = 1;
+
+var possibleLevels = {
+    1: {
+        scorePerLine: 10,
+        speed: 400,
+        nextLevelScore: 500 
+    },
+    2: {
+        scorePerLine: 15,
+        speed: 300,
+        nextLevelScore: 1500 
+    },
+};
+
+possibleLevels[currentLevel];
+
 var activeTetro = {
     x: 0,
     y: 0,
@@ -137,7 +156,8 @@ function hasCollisions() {
 }
 
 function removeFullLines() {
-    var canRemoveLine = true;
+    var canRemoveLine = true,
+    filledLines = 0;
     for (var y = 0; y < playfield.length; y++) {
         for (var x = 0; x < playfield[y].length; x++) {
             if (playfield[y][x] !== 2) {
@@ -148,9 +168,28 @@ function removeFullLines() {
         if (canRemoveLine) {
             playfield.splice(y, 1);
             playfield.splice(0, 0, [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+            filledLines += 1;
         }
         canRemoveLine = true;
     }
+
+    switch (filledLines) {
+        case 1:
+            score += 10;
+            break;
+        case 2:
+            score += 10 * 3;
+            break;
+        case 3:
+            score += 10 * 6;
+            break;
+        case 4:
+            score += 10 * 12;
+            break;
+    }
+
+        scoreElem.innerHTML = score;
+        
 }
 
 function getNewTetro(){
@@ -209,7 +248,7 @@ function startGame() {
     moveTetroDown();
     addActiveTetro();
     draw();
-    setTimeout(startGame, gameSpeed);
+    setTimeout(startGame, possibleLevels[currentLevel].speed);
 }
 
-setTimeout(startGame, gameSpeed);
+setTimeout(startGame, possibleLevels[currentLevel].speed);
