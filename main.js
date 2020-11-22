@@ -2,8 +2,8 @@ var main = document.querySelector(".main");
 
 var playfield = [
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 1, 1, 0, 0, 0],
-    [0, 0, 0, 0, 0, 1, 1, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -24,6 +24,15 @@ var playfield = [
 ];
 
 var gameSpeed = 400;
+var activeTetro = {
+    x: 0,
+    y: 0,
+    shape: [
+        [1,1,1],
+        [0,1,0],
+        [0,0,0]
+    ],
+};
 
 function draw() {
     var mainInnerHTML = "";
@@ -39,6 +48,27 @@ function draw() {
             }
         }
     main.innerHTML = mainInnerHTML;
+}
+
+function removePrevActiveTetro() {
+    for (var y = 0; y < playfield.length; y++) {
+        for (var x = 0; x < playfield[y].length; x++) {
+            if (playfield[y][x] === 1) {
+                playfield[y][x] = 0;
+            }
+        }
+    }
+}
+
+function addActiveTetro() {
+    removePrevActiveTetro();
+    for (var y = 0; y < activeTetro.shape.length; y++) {
+        for (var x = 0; x < activeTetro.shape[y].length; x++) {
+            if (activeTetro.shape[y][x]) {
+                playfield[activeTetro.y + y][activeTetro.x + x] = activeTetro.shape[y][x];
+            }
+        }
+    }
 }
 
 function canTetroMoveDown() {
@@ -158,24 +188,27 @@ function fixTetro() {
     playfield[1] = [0, 0, 0, 0, 1, 1, 0, 0, 0, 0];
 }
 
-draw();
-
 document.onkeydown = function(e) { 
     if (e.code === "ArrowLeft") {
-            moveTetroLeft();
+            activeTetro.x -= 1; //moveTetroLeft();
         } else if (e.code === "ArrowRight") {
-            moveTetroRight();
+            activeTetro.x += 1; //moveTetroRight();
         }
         else if (e.code === "ArrowDown") {
-            moveTetroDown();
+            activeTetro.y += 1; //moveTetroDown();
     }
-    draw();
-};  
 
-function startGame() {
+    addActiveTetro();
+    draw();
+};
+
+addActiveTetro();
+draw();
+
+/*function startGame() {
     moveTetroDown();
     draw();
     setTimeout(startGame, gameSpeed);
 }
 
-setTimeout(startGame, gameSpeed);
+setTimeout(startGame, gameSpeed);*/
