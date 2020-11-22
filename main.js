@@ -32,17 +32,55 @@ var currentLevel = 1;
 var possibleLevels = {
     1: {
         scorePerLine: 10,
-        speed: 400,
-        nextLevelScore: 500 
+        speed: 500,
+        nextLevelScore: 100 
     },
     2: {
         scorePerLine: 15,
+        speed: 500,
+        nextLevelScore: 300 
+    },
+    3: {
+        scorePerLine: 20,
+        speed: 400,
+        nextLevelScore: 600 
+    },
+    4: {
+        scorePerLine: 25,
+        speed: 400,
+        nextLevelScore: 1000 
+    },
+    5: {
+        scorePerLine: 30,
         speed: 300,
         nextLevelScore: 1500 
     },
+    6: {
+        scorePerLine: 35,
+        speed: 300,
+        nextLevelScore: 2000 
+    },
+    7: {
+        scorePerLine: 40,
+        speed: 200,
+        nextLevelScore: 3000 
+    },
+    8: {
+        scorePerLine: 45,
+        speed: 150,
+        nextLevelScore: 4000 
+    },
+    9: {
+        scorePerLine: 50,
+        speed: 100,
+        nextLevelScore: 5000 
+    },
+    10: {
+        scorePerLine: 100,
+        speed: 50,
+        nextLevelScore: Infinity, 
+    },
 };
-
-possibleLevels[currentLevel];
 
 var activeTetro = {
     x: 0,
@@ -189,6 +227,11 @@ function removeFullLines() {
     }
 
         scoreElem.innerHTML = score;
+
+        if(score >= possibleLevels[currentLevel].nextLevelScore) {
+            currentLevel++;
+            levelElem.innerHTML = currentLevel;
+        }
         
 }
 
@@ -240,6 +283,9 @@ document.onkeydown = function(e) {
     addActiveTetro();
     draw();
 };
+
+scoreElem.innerHTML = score;
+levelElem.innerHTML = currentLevel;
 
 addActiveTetro();
 draw();
