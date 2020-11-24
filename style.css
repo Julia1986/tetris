@@ -32,11 +32,11 @@
 }
 
 .movingCell {
-    background-color: #8c7540;
+    background-color: #575757;
 }
 
 .fixedCell {
-    background-color: #312812;
+    background-color: #3a3a3a;
 }
 
 #next-tetro {
@@ -53,17 +53,26 @@ button {
     margin: 20px auto 0;
 }
 
-button:hover {
-    background: #494949;
+button:focus,
+button:active {
+    outline: none;
 }
 
-.start {
+#start {
     border-radius: 0 10px;
     color: #ffffff;
 }
 
-.pause {
+#start:hover {
+    background: linear-gradient(135deg, #202020, #767676);
+}
+
+#pause {
     border-radius: 10px 0;
     margin-left: 20px;
     color: #ffffff;
+}
+
+#pause:hover {
+    background: linear-gradient(45deg, #767676, #202020);
 }
