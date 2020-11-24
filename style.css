@@ -48,7 +48,7 @@
 
 button {
     border: none;
-    background: #252525;
+    background: #333333;
     padding: 8px 40px;
     margin: 20px auto 0;
 }
@@ -75,4 +75,16 @@ button:active {
 
 #pause:hover {
     background: linear-gradient(45deg, #767676, #202020);
+}
+
+#game-over {
+    font-size: 100px;
+    margin: 20px 0;
+    text-align: center;
+    color: red;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: none;
 }
