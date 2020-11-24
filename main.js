@@ -257,6 +257,16 @@ function moveTetroDown() {
         }
 }
 
+function dropTetro() {
+    for (var y = activeTetro.y; y < playfield.length; y++){
+        activeTetro.y += 1;
+        if (hasCollisions()) {
+            activeTetro.y -= 1;
+            break;
+        }
+    }
+}
+
 document.onkeydown = function(e) { 
     if (e.code === "ArrowLeft") {
             activeTetro.x -= 1; //moveTetroLeft();
@@ -272,7 +282,9 @@ document.onkeydown = function(e) {
             moveTetroDown();
         } else if (e.code === "ArrowUp") {
             rotateTetro();
-    }
+        } else if (e.code === "Space") {
+            dropTetro();
+        }
 
     addActiveTetro();
     draw();
