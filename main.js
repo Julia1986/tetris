@@ -253,9 +253,7 @@ function moveTetroDown() {
             activeTetro.y -= 1;
             fixTetro();
             removeFullLines();
-            activeTetro.shape = getNewTetro();
-            activeTetro.x = Math.floor((10 - activeTetro.shape[0].length) / 2);
-            activeTetro.y = 0;
+            activeTetro = getNewTetro();
         }
 }
 
