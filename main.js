@@ -89,10 +89,10 @@ var figures = {
         [1,1],
     ],
     I: [
-        [0,1,0,0],
-        [0,1,0,0],
-        [0,1,0,0],
-        [0,1,0,0],
+        [0,0,0,0],
+        [1,1,1,1],
+        [0,0,0,0],
+        [0,0,0,0],
     ],
     S: [
         [0,1,1],
@@ -181,7 +181,6 @@ function rotateTetro() {
     activeTetro.shape = activeTetro.shape[0].map((val, index) => 
     activeTetro.shape.map((row) => row[index]).reverse()
 );
-
     if (hasCollisions()) {
         activeTetro.shape = prevTetroState;
     }
@@ -270,11 +269,11 @@ function moveTetroDown() {
             activeTetro.y -= 1;
             fixTetro();
             removeFullLines();
-            activeTetro = nextTetro; //?????
+            activeTetro = nextTetro;
             if (hasCollisions()) {
-                reset();
-              }
-            nextTetro = getNewTetro(); //?????
+                
+            }
+            nextTetro = getNewTetro(); 
         }
 }
 
@@ -309,7 +308,7 @@ document.onkeydown = function(e) {
 
     addActiveTetro();
     draw();
-    drawNextTetro(); //???????
+    drawNextTetro(); 
 };
 
 scoreElem.innerHTML = score;
@@ -317,13 +316,13 @@ levelElem.innerHTML = currentLevel;
 
 addActiveTetro();
 draw();
-drawNextTetro(); //???????
+drawNextTetro(); 
 
 function startGame() {
     moveTetroDown();
     addActiveTetro();
     draw();
-    drawNextTetro(); //???????
+    drawNextTetro(); 
     setTimeout(startGame, possibleLevels[currentLevel].speed);
 }
 

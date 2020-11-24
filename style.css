@@ -40,11 +40,30 @@
 }
 
 #next-tetro {
-    width: 120px;
-    height: 60px;
     position: absolute;
     top: 200px;
     left: 200px;
     font-size: 0;
   }
 
+button {
+    border: none;
+    background: #252525;
+    padding: 8px 40px;
+    margin: 20px auto 0;
+}
+
+button:hover {
+    background: #494949;
+}
+
+.start {
+    border-radius: 0 10px;
+    color: #ffffff;
+}
+
+.pause {
+    border-radius: 10px 0;
+    margin-left: 20px;
+    color: #ffffff;
+}
