@@ -5,6 +5,7 @@ const levelElem = document.getElementById('level');
 const nextTetroElem = document.getElementById('next-tetro');
 const startBtn = document.getElementById('start');
 const pauseBtn = document.getElementById('pause');
+const gameOver = document.getElementById('game-over');
 
 var playfield = [
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -30,6 +31,7 @@ var playfield = [
 ];
 
 var score = 0;
+var gameTimerID;
 var currentLevel = 1;
 var isPaused = false;
 
@@ -317,21 +319,26 @@ document.onkeydown = function(e) {
 
 pauseBtn.addEventListener("click", (e) => {
     if (e.target.innerHTML === "Pause") {
-        e.target.innerHTML = "Play";
-        //clearTimeout(gameTimerID);
-      } else {
-        e.target.innerHTML = "Pause";
-        gameTimerID = setTimeout(startGame, possibleLevels[currentLevel].speed);
-      }
+      e.target.innerHTML = "Play";
+      clearTimeout(gameTimerID);
+    } else {
+      e.target.innerHTML = "Pause";
+      //gameTimerID = setTimeout(startGame, possibleLevels[currentLevel].speed);
+    }
     isPaused = !isPaused;
+  });
+
+startBtn.addEventListener("click", (e) => {
+    /*e.target.innerHTML = "Again";
+    isPaused = false;*/
+    gameTimerID = setTimeout(startGame, possibleLevels[currentLevel].speed);
+    /*gameOver.style.display = "none";*/
   });
 
 scoreElem.innerHTML = score;
 levelElem.innerHTML = currentLevel;
 
-addActiveTetro();
 draw();
-drawNextTetro(); 
 
 function startGame() {
     if (!isPaused) {
@@ -340,7 +347,6 @@ function startGame() {
     draw();
     drawNextTetro(); 
     }
-    setTimeout(startGame, possibleLevels[currentLevel].speed);
+    gameTimerID = setTimeout(startGame, possibleLevels[currentLevel].speed);
 }
 
-setTimeout(startGame, possibleLevels[currentLevel].speed);
